@@ -10,8 +10,8 @@ import (
 )
 
 var testPath = "./tmp"
-var testUrl = "127.0.0.1:33300"
-var testUrl4client = "http://" + testUrl
+var testUrl = ":33300"
+var testUrl4client = "http://127.0.0.1" + testUrl
 
 func TestHandlers(t *testing.T) {
 	s, err := NewLockerServer(testPath, testUrl)

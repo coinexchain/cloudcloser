@@ -11,7 +11,7 @@ import (
 )
 
 type LockerServer struct {
-	db     *leveldb.DB
+	DB     *leveldb.DB
 	server *http.Server
 }
 
@@ -21,7 +21,7 @@ func NewLockerServer(path, url string) (*LockerServer, error) {
 		return nil, err
 	}
 	l := &LockerServer{
-		db: db,
+		DB: db,
 	}
 	l.server = &http.Server{
 		Addr:    url,
@@ -43,7 +43,7 @@ func (l *LockerServer) Stop() {
 	if err := l.server.Shutdown(ctx); err != nil {
 		//log
 	}
-	err := l.db.Close()
+	err := l.DB.Close()
 	if err != nil {
 		//log
 	}
