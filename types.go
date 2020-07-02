@@ -6,14 +6,14 @@ import (
 	"strings"
 )
 
-type Entry struct {
-	K HexBytes `json:"k"`
-	V HexBytes `json:"v"`
+type entry struct {
+	K hexBytes `json:"k"`
+	V hexBytes `json:"v"`
 }
 
-type HexBytes []byte
+type hexBytes []byte
 
-func (bz HexBytes) MarshalJSON() ([]byte, error) {
+func (bz hexBytes) MarshalJSON() ([]byte, error) {
 	s := strings.ToUpper(hex.EncodeToString(bz))
 	jbz := make([]byte, len(s)+2)
 	jbz[0] = '"'
@@ -22,7 +22,7 @@ func (bz HexBytes) MarshalJSON() ([]byte, error) {
 	return jbz, nil
 }
 
-func (bz *HexBytes) UnmarshalJSON(data []byte) error {
+func (bz *hexBytes) UnmarshalJSON(data []byte) error {
 	if len(data) < 2 || data[0] != '"' || data[len(data)-1] != '"' {
 		return fmt.Errorf("invalid hex string: %s", data)
 	}

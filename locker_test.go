@@ -19,7 +19,7 @@ func TestHandlers(t *testing.T) {
 		t.Fatal(err)
 	}
 	go s.Start()
-	e := Entry{
+	e := entry{
 		K: []byte{0x01},
 		V: []byte{0x02},
 	}

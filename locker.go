@@ -25,7 +25,7 @@ func NewLockerServer(path, url string) (*LockerServer, error) {
 	}
 	l.server = &http.Server{
 		Addr:    url,
-		Handler: NewRouter(l),
+		Handler: newRouter(l),
 	}
 	return l, nil
 }

@@ -9,15 +9,15 @@ import (
 	"net/http"
 )
 
-func NewRouter(server *LockerServer) http.Handler {
+func newRouter(server *LockerServer) http.Handler {
 	router := mux.NewRouter()
-	router.HandleFunc("/set", HandleSet(server)).Methods("POST")
-	router.HandleFunc("/get", HandleGet(server)).Methods("POST")
-	router.HandleFunc("/delete", HandleDelete(server)).Methods("POST")
+	router.HandleFunc("/set", handleSet(server)).Methods("POST")
+	router.HandleFunc("/get", handleGet(server)).Methods("POST")
+	router.HandleFunc("/delete", handleDelete(server)).Methods("POST")
 	return router
 }
 
-func HandleSet(server *LockerServer) http.HandlerFunc {
+func handleSet(server *LockerServer) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		err := r.ParseForm()
 		if err != nil {
@@ -29,7 +29,7 @@ func HandleSet(server *LockerServer) http.HandlerFunc {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
-		var e Entry
+		var e entry
 		err = json.Unmarshal(body, &e)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -39,7 +39,7 @@ func HandleSet(server *LockerServer) http.HandlerFunc {
 	}
 }
 
-func HandleGet(server *LockerServer) http.HandlerFunc {
+func handleGet(server *LockerServer) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		err := r.ParseForm()
 		if err != nil {
@@ -62,7 +62,7 @@ func HandleGet(server *LockerServer) http.HandlerFunc {
 	}
 }
 
-func HandleDelete(server *LockerServer) http.HandlerFunc {
+func handleDelete(server *LockerServer) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		err := r.ParseForm()
 		if err != nil {
