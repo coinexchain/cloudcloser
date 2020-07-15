@@ -35,7 +35,11 @@ func handleSet(server *LockerServer) http.HandlerFunc {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
-		_ = server.DB.Put(e.K, e.V, &opt.WriteOptions{Sync: false})
+		err = server.DB.Put([]byte(e.K), []byte(e.V), &opt.WriteOptions{Sync: false})
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+		}
+		return
 	}
 }
 
@@ -75,6 +79,9 @@ func handleDelete(server *LockerServer) http.HandlerFunc {
 			return
 		}
 		//log.Println("r.Body", string(body))
-		_ = server.DB.Delete(body, nil)
+		err = server.DB.Delete(body, nil)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+		}
 	}
 }

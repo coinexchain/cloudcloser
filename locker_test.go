@@ -20,8 +20,8 @@ func TestHandlers(t *testing.T) {
 	}
 	go s.Start()
 	e := entry{
-		K: []byte{0x01},
-		V: []byte{0x02},
+		K: string([]byte{0x01}),
+		V: string([]byte{0x02}),
 	}
 	b, _ := json.Marshal(e)
 	_, err = http.Post(testUrl4client+"/set", "application/json", strings.NewReader(string(b)))
